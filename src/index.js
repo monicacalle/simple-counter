@@ -1,17 +1,49 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./components/index.css";
+import propTypes from "prop-types";
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+import App from "./App";
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+function SimpleCounter(props) {
+  return (
+    <div className="bigCounter">
+      <div className="calendar">
+        <i className="far fa-clock"></i>
+      </div>
+      <div className="four">{props.digitFour % 10}</div>
+      <div className="three">{props.digitThree % 10}</div>
+      <div className="two">{props.digitTwo % 10}</div>
+      <div className="one">{props.digitOne % 10}</div>
+    </div>
+  );
+}
+
+SimpleCounter.propTypes = {
+  digitFour: propTypes.number,
+  digitThree: propTypes.number,
+  digitTwo: propTypes.number,
+  digitOne: propTypes.number,
+};
+
+let counter = 0;
+setInterval(function () {
+  const four = Math.floor(counter / 1000);
+  const three = Math.floor(counter / 100);
+  const two = Math.floor(counter / 10);
+  const one = Math.floor(counter / 1);
+  console.log(four, three, two, one);
+
+  counter++;
+  ReactDOM.render(
+    <React.StrictMode>
+      <SimpleCounter
+        digitOne={one}
+        digitTwo={two}
+        digitThree={three}
+        digitFour={four}
+      />
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+}, 1000);
